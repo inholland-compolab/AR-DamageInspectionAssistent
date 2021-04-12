@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: HoloMenuScenes
-  productName: HoloMenuScenes
+  companyName: JesseGraduation
+  productName: ARapp
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -596,16 +596,16 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: HoloMenuScenes
+  metroPackageName: ARapp
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: Assets\WSATestCertificate.pfx
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: HoloMenuScenes
-  metroCertificateIssuer: HoloMenuScenes
-  metroCertificateNotAfter: 80c64335924cd801
-  metroApplicationDescription: HoloMenuScenes
+  metroCertificateSubject: JesseGraduation
+  metroCertificateIssuer: JesseGraduation
+  metroCertificateNotAfter: 00cd8eba844ed801
+  metroApplicationDescription: ARapp
   wsaImages: {}
-  metroTileShortName: HoloLens_Scenes
+  metroTileShortName: Inspect_AR_App
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
