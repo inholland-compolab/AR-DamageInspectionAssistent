@@ -24,8 +24,8 @@ public class SaveProject : MonoBehaviour
         projectModel = inputModel.GetComponent<TextMeshProUGUI>().text;         //Set project model from dropdown
         ProjectModelJson.Add("Model", projectModel);                            //Add project model
 
-        string path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";       //Set file path
-        File.WriteAllText(path, ProjectNameJson.ToString()+                     //Create text file / Overwrite previous text file
+        string path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";         //Set file path
+        File.WriteAllText(path, ProjectNameJson.ToString()+                                             //Create text file / Overwrite previous text file
         ProjectModelJson.ToString());                                                       
     }
 }
