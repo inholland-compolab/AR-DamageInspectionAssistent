@@ -18,7 +18,7 @@ public class InspectionButtons : MonoBehaviour
 
     GameObject spawnComponent;
     CoordinatesInput spawnScript;
-    LoadInspectionModel loadInspectionModel;
+    LoadSaveManager loadSaveManager;
 
     string loadProjectName;
 

@@ -6,10 +6,13 @@ using System.IO;
 using SimpleJSON;
 using TMPro;
 
-public class LoadInspectionModel : MonoBehaviour
+public class LoadSaveManager : MonoBehaviour
 {
     [SerializeField] GameObject modelParent;       //Assign Image Tracker as parent of model
     Object selectedPrefab;
+
+    [SerializeField] GameObject coordinatePrefab;
+    GameObject spawnedCoordinate;
 
     [SerializeField] GameObject noPathPopUp;       //Assign no valid path pop up
 
@@ -22,9 +25,18 @@ public class LoadInspectionModel : MonoBehaviour
 
     string nameLoad;
     string modelLoad;
+    string markingLoad;
+    string coordinatesLoad;
 
     string projectFileName;
     public string projectName;
+
+    public string markingTag;
+
+    string[] preArrayLoad;
+    string[] arrayLoad;
+    Vector3 spawnLoad;
+    GameObject spawnedModel;
 
     float timer = 3.0f;
 
@@ -78,17 +90,67 @@ public class LoadInspectionModel : MonoBehaviour
         JSONObject loadJson = (JSONObject)JSON.Parse(jsonString);                                   //Retrieve json object
 
         //Set values
-        nameLoad = loadJson["Name"];                                                                //Get name from name object
+        nameLoad = loadJson["Project"];                                                                //Get name from name object
         modelLoad = loadJson["Model"];                                                              //Get model name from model object
+        //markingLoad = loadJson["Marking"];
+        //coordinatesLoad = loadJson["Coordiantes"];
+        // Debug.Log(jsonString);
+        // Debug.Log("project:"+nameLoad);
+        // Debug.Log("model:"+modelLoad);
+        // Debug.Log("marking:"+markingLoad);
+
 
         //Spawn Model
         var prefab = Resources.Load("3DModels/"+modelLoad);                 //Load nose cone prefab corresponding to the model name
         selectedPrefab = prefab as GameObject;                              //Set prefab variable
         Instantiate(selectedPrefab, modelParent.transform);                 //Spawn prefab (wanted nose cone) as child of Target Image
+
+        //Search for spawned model gameobject
+        spawnedModel = GameObject.Find(modelLoad+"(Clone)");
+
+        //Spawn Coordinates
+        // preArrayLoad = jsonString.Split('[',']');   //Select part from [ to ]
+        // arrayLoad = preArrayLoad[1].ToString().Split(';');  //Split string into array
+        // for (int i = 0; i <= arrayLoad.Length; i++) {
+        //     if ( ((i % 3) == 0) && (i <= (arrayLoad.Length-2)) ) {
+        //         spawnLoad.x = float.Parse(arrayLoad[i]);
+        //         spawnLoad.y = float.Parse(arrayLoad[(i+1)]);
+        //         spawnLoad.z = float.Parse(arrayLoad[(i+2)]);
+        //         //Spawn coordinate, set parent with relative offset, set local position
+        //         spawnedCoordinate = Instantiate(coordinatePrefab);
+        //         spawnedCoordinate.transform.SetParent(spawnedModel.transform, false);
+        //         spawnedCoordinate.transform.localPosition = spawnLoad;
+        //     }
+        // }
     }
 
     public void SetTimer() {
         timer = 3.0f;
+    }
+
+    public void Save() {
+        JSONObject ProjectJson = new JSONObject();                          //Create name object in JSON File
+        ProjectJson.Add("Project", projectName);                            //Add project name (why not nameLoad???)
+
+        ProjectJson.Add("Model", modelLoad);                               //Add project model
+
+        ProjectJson.Add("Marking", markingTag);                               //Add project model
+
+        JSONArray coordinatesSaved = new JSONArray();
+        GameObject[] coordinatesList = GameObject.FindGameObjectsWithTag("Coordinate");
+        for (int i = 0; i < coordinatesList.Length; i++) {
+            coordinatesSaved.Add(coordinatesList[i].transform.localPosition.x);
+            coordinatesSaved.Add(coordinatesList[i].transform.localPosition.y);
+            coordinatesSaved.Add(coordinatesList[i].transform.localPosition.z);
+        }
+        ProjectJson.Add("Coordinates", coordinatesSaved);
+        
+        string path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";         //Set file path
+        File.WriteAllText(path, ProjectJson.ToString());
+    }
+
+    public void GetMarkingTag(string markingTag) {
+        this.markingTag = markingTag;
     }
 
 }

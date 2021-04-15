@@ -26,6 +26,6 @@ public class SaveProject : MonoBehaviour
 
         string path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";         //Set file path
         File.WriteAllText(path, ProjectNameJson.ToString()+                                             //Create text file / Overwrite previous text file
-        ProjectModelJson.ToString());                                                       
+        ProjectModelJson.ToString());
     }
 }

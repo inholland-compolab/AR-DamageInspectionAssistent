@@ -10,7 +10,7 @@ public class ChangesButtons : MonoBehaviour
 
     GameObject[] coordinatesList;
 
-    string projectName;
+    string markingTag;
 
     public void Awake() 
     {
@@ -34,6 +34,9 @@ public class ChangesButtons : MonoBehaviour
         //Move coordinates to "*number*" as childs
         //Save coordinates from "*number*" gameobject in json array
     }
+
+    
+
 
     /////////////////////////////////////Add Window////////////////////////////////////
     public void Select() {
