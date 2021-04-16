@@ -42,10 +42,6 @@ public class CoordinatesInput : MonoBehaviour
         // Debug.Log("markingTagParent: "+modelParent.name);
     }
 
-    public void ChangesToggled(bool changesBool) {
-        this.changesBool = changesBool;
-    }
-
     public void SpawnPosition() {
         if (changesBool == true) {                                              //Only if changes are allowed
             cursorPosition = gazeCursor.transform.position;             //Get cursor position
@@ -59,7 +55,10 @@ public class CoordinatesInput : MonoBehaviour
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
+    public void ChangesToggled(bool changesBool) {
+        this.changesBool = changesBool;
+    }
+    
     public void GetMarkingTag(string markingTag) {
         this.markingTag = markingTag;
     }

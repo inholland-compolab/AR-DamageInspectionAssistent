@@ -9,9 +9,6 @@ public class NumberValue : MonoBehaviour
     public string markingTag;
     string value;
 
-    string colour;
-    string colour_;
-
     public void Update() 
     {
         markingTag = numberDisplay.GetComponent<TextMeshPro>().text;

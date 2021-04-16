@@ -11,10 +11,12 @@ public class InspectionButtons : MonoBehaviour
 
     [SerializeField] public GameObject[] inspectionButtons;
     [SerializeField] public GameObject[] nonChangesButtons;
+    [SerializeField] public GameObject projectButton;
     
     public bool startBool = true;
     public bool changesBool = false;
     public bool projectBool = false;
+    bool selectBool = false;
 
     GameObject spawnComponent;
     CoordinatesInput spawnScript;
@@ -34,6 +36,10 @@ public class InspectionButtons : MonoBehaviour
         inspectionMenuTitle.SetActive(startBool);
         changesWindow.SetActive(changesBool);
         projectWindow.SetActive(projectBool);
+        if (selectBool == true) {
+            projectButton.SetActive(false);
+        }
+        Debug.Log("changes: "+changesBool);
     }
 
     public void ButtonChanges() {
@@ -92,6 +98,7 @@ public class InspectionButtons : MonoBehaviour
     }
 
     public void ButtonSelect() {
+        selectBool = true;                                          //Get button specific bool when pressed
         for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons active
             inspectionButtons[i].SetActive(true);
         }
