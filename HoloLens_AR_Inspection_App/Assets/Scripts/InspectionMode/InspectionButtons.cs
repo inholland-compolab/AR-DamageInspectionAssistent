@@ -8,6 +8,7 @@ public class InspectionButtons : MonoBehaviour
     [SerializeField] GameObject inspectionMenuTitle;
     [SerializeField] GameObject changesWindow;
     [SerializeField] GameObject projectWindow;
+    [SerializeField] GameObject listWindow;
 
     [SerializeField] public GameObject[] inspectionButtons;
     [SerializeField] public GameObject[] nonChangesButtons;
@@ -17,6 +18,7 @@ public class InspectionButtons : MonoBehaviour
     public bool changesBool = false;
     public bool projectBool = false;
     bool selectBool = false;
+    bool listBool = false;
 
     GameObject spawnComponent;
     CoordinatesInput spawnScript;
@@ -36,6 +38,7 @@ public class InspectionButtons : MonoBehaviour
         inspectionMenuTitle.SetActive(startBool);
         changesWindow.SetActive(changesBool);
         projectWindow.SetActive(projectBool);
+        listWindow.SetActive(listBool);
         if (selectBool == true) {
             projectButton.SetActive(false);
         }
@@ -106,10 +109,22 @@ public class InspectionButtons : MonoBehaviour
         projectBool = false;
     }
 
-    public void ButtonList() {}                                  //Show Damages in List (Number, Type)
+    public void ButtonList() {
+        listBool = true;
+        startBool = false;
+    }
+    public void ListBack() {
+        listBool = false;
+        startBool = true;
+    }
 
     public void ButtonBack() {
         SceneLoader.Load(SceneLoader.Scene.StartScreen);
+    }
+    ////////////////////////////////////////////////////////////////
+
+    public void GetListBool(bool listBool) {
+        this.listBool = listBool;
     }
    
 }

@@ -18,6 +18,7 @@ public class CoordinatesInput : MonoBehaviour
     [SerializeField] private LineController line;                       //LineRenderer object
     GameObject spawnedCoordinate;
 
+    string markingColour;
     string markingTag;
     int markingCount;
 
@@ -36,8 +37,7 @@ public class CoordinatesInput : MonoBehaviour
         //     //if (*coordinate*.tag == "Coordinate") {
         //         //coordinates += *coordinate*;
         // //}
-
-        modelParent = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag);  //Find model for parent
+        modelParent = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag);  //Find model for parent      "ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag+","+markingColour
         // Debug.Log("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"+markingTag);
         // Debug.Log("markingTagParent: "+modelParent.name);
     }
@@ -65,5 +65,9 @@ public class CoordinatesInput : MonoBehaviour
 
     public void GetMarkingCount(int markingCount) {
         this.markingCount = markingCount;
+    }
+
+    public void GetMarkingColour(string markingColour) {
+        this.markingColour = markingColour;
     }
 }

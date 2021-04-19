@@ -9,6 +9,11 @@ public class LineController : MonoBehaviour
     private List<string> coordinatesCount = new List<string>();
     private List<string> otherCoordinates = new List<string>();
 
+    string materialName;
+    string[] markingColour;
+    Material material;
+    Material selectedMaterial;
+
     // Awake is called when scene is loaded
     private void Awake() 
     {
@@ -38,14 +43,23 @@ public class LineController : MonoBehaviour
                     otherCoordinates.Add(coordinates[i].transform.name);
                 }
             }
-            //Debug.Log("not used: "+otherCoordinates.Count);
             otherCoordinates.Clear();
         }
         else {return;}
+
+        selectedMaterial = lr.transform.parent.GetComponent<Renderer>().material;
+        // materialName = markingColour[1];
+        // MaterialSelection();
+        lr.material = selectedMaterial;
     }
 
     // public void SetupLine(GameObject[] coordinates) {
     //     lr.positionCount = coordinates.Length;
     //     this.coordinates = coordinates;
+    // }
+
+    // public void MaterialSelection() {
+    //     var material = Resources.Load("Colours/"+materialName);
+    //     selectedMaterial = material as Material; 
     // }
 }

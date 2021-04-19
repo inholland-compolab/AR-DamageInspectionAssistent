@@ -16,10 +16,15 @@ public class HierarchyManager : MonoBehaviour
     GameObject[] coordinates;
 
     string markingTag;
+    string markingColour;
+
+    Material selectedMaterial;
+    string materialName;
 
     public void Update() 
     {
-        parentPrefab = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings");
+        parentPrefab = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings");    //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"
+        Debug.Log("ColorName: "+markingColour);
     }
 
     public void MarkingTag() {
@@ -28,27 +33,27 @@ public class HierarchyManager : MonoBehaviour
         marking.transform.SetParent(parentPrefab.transform, false);
         marking.name = markingTag;
 
-        GameObject lr = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag);
+        materialName = markingColour;
+        MaterialSelection();
+        marking.gameObject.GetComponent<Renderer>().material = selectedMaterial;
+
+        GameObject lr = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag); //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag+","+markingColour
         marking = Instantiate(lineRendererPrefab);
         marking.transform.SetParent(lr.transform, false);
     }
 
-    // public void PopulateMarking() {
-    //     coordinates = GameObject.FindGameObjectsWithTag("Coordinate");
-    //     if (coordinates != null) {                                       //Not begin before array is created
-    //         for (int i = 0; i < coordinates.Length; i++) {
-    //             coordinates[i].transform.SetParent(marking.transform, false);
-    //             coordinates[i].transform.tag = ("Coordinate");
-                
-    //             CoordinatesInput coordinatesInput = GameObject.Find("InspectionManager").GetComponent<CoordinatesInput>();
-    //         }
-    //     }
-    //     else {return;}
-    // }
+    public void MaterialSelection() {
+        var material = Resources.Load("Colours/"+materialName);
+        selectedMaterial = material as Material; 
+    }
 
     //////////////////////////////////////////////////////////////////////
 
     public void GetMarkingTag(string markingTag) {
         this.markingTag = markingTag;
+    }
+
+    public void GetMarkingColour(string markingColour) {
+        this.markingColour = markingColour;
     }
 }
