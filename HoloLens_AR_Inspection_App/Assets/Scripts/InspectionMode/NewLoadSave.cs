@@ -54,7 +54,10 @@ public class NewLoadSave : MonoBehaviour
     Material material;
     Material selectedMaterial;
 
-    int loops = 100;
+    [SerializeField] GameObject tagPrefab;
+    GameObject tagObject;
+
+    int loops = 1000;
     float timer = 3.0f;
 
     InspectionButtons inspectionButtons;
@@ -176,6 +179,8 @@ public class NewLoadSave : MonoBehaviour
         foreach (Transform i in parentPrefab.transform) {
             marking = Instantiate(lineRendererPrefab);
             marking.transform.SetParent(i.transform, false);
+            tagObject = Instantiate(tagPrefab);
+            tagObject.transform.SetParent(i.transform, false);
         }
 
     }
@@ -188,7 +193,12 @@ public class NewLoadSave : MonoBehaviour
     public void Save() {
         string savePath = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";     //Define project json file path
         string jsonString = File.ReadAllText(savePath);                                                 //Read whole json file and convert to string
-        JSONObject loadJson = (JSONObject)JSON.Parse(jsonString);
+        //JSONObject loadJson = (JSONObject)JSON.Parse(jsonString);
+
+        JSONObject ProjectJson = new JSONObject();                          //Create name object in JSON File
+        ProjectJson.Add("Project", projectName);                            //Add project name (why not nameLoad???)
+
+        ProjectJson.Add("Model", modelLoad);                               //Add project model
 
         GameObject markingsGroup = GameObject.Find("ImageTarget/"+modelLoad+"(Clone)/Markings");    //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"
         foreach (Transform i in markingsGroup.transform) {
@@ -202,12 +212,12 @@ public class NewLoadSave : MonoBehaviour
                     coordinatesSaved.Add(x.transform.localPosition.z);
                 }
             }
-            loadJson.Add("Marking_"+i.name, coordinatesSaved);
-            loadJson.Add("Colour_"+i.name, colourName);
+            ProjectJson.Add("Marking_"+i.name, coordinatesSaved);
+            ProjectJson.Add("Colour_"+i.name, colourName);
         }
         
         string path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";         //Set file path
-        File.WriteAllText(path, loadJson.ToString());
+        File.WriteAllText(path, ProjectJson.ToString());
     }
 
     public void List() {

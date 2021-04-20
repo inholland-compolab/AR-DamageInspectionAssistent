@@ -14,6 +14,8 @@ public class HierarchyManager : MonoBehaviour
     [SerializeField] GameObject lineRendererPrefab;
     GameObject marking;
     GameObject[] coordinates;
+    [SerializeField] GameObject tagPrefab;
+    GameObject tagObject;
 
     string markingTag;
     string markingColour;
@@ -37,9 +39,12 @@ public class HierarchyManager : MonoBehaviour
         MaterialSelection();
         marking.gameObject.GetComponent<Renderer>().material = selectedMaterial;
 
-        GameObject lr = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag); //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag+","+markingColour
+        GameObject lr = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag); //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag
         marking = Instantiate(lineRendererPrefab);
         marking.transform.SetParent(lr.transform, false);
+
+        tagObject = Instantiate(tagPrefab);
+        tagObject.transform.SetParent(lr.transform, false);
     }
 
     public void MaterialSelection() {

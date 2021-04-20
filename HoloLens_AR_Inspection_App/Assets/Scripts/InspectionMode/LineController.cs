@@ -31,7 +31,7 @@ public class LineController : MonoBehaviour
         }
 
         if (coordinatesCount.Count > 0) {
-        lr.positionCount = coordinatesCount.Count - 1;
+        lr.positionCount = coordinatesCount.Count - 2;
         }
 
         if (coordinates != null) {                                       //Not begin before array is created
