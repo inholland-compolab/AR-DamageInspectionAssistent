@@ -5,11 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Coordinate
-  - Coordinate_0
-  - Coordinate_1
-  - Coordinate_2
-  - Coordinate_3
-  - Coordinate_4
+  - Number
   layers:
   - Default
   - TransparentFX

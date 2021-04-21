@@ -44,7 +44,11 @@ public class TagPlacement : MonoBehaviour
                 sumZ = sumZ + vectorZ;
             }
         }
-    //     gameObject.transform.position = new Vector3 ( (sumX / x) , (sumY / x) , (sumZ / x) );
+        if (x > 0) {
+            //gameObject.transform.position = new Vector3 ( (sumX / x)*1.05f , (sumY / x)*0.95f , (sumZ / x)*0.95f );
+            //gameObject.transform.position = new Vector3 ( (sumX / x)*1.1f , (sumY / x)*1.1f , (sumZ / x)*1.1f );
+            gameObject.transform.position = new Vector3 ( (sumX / x), (sumY / x), (sumZ / x) );
+        }
 
         //Rotate tag to camera
         gameObject.transform.rotation = Quaternion.LookRotation(gameObject.transform.position - Camera.main.transform.position);

@@ -14,13 +14,10 @@ public class CoordinatesInput : MonoBehaviour
     GameObject modelParent;
 
     [SerializeField] GameObject coordinatePrefab;                       //Set coordinate object
-    [SerializeField] private GameObject[] coordinates;                  //Array of coordinates
-    [SerializeField] private LineController line;                       //LineRenderer object
     GameObject spawnedCoordinate;
 
-    string markingColour;
     string markingTag;
-    int markingCount;
+    string modelName;
 
 
     void Start()
@@ -30,27 +27,18 @@ public class CoordinatesInput : MonoBehaviour
 
     void Update()
     {
-        // coordinates = GameObject.FindGameObjectsWithTag("Coordinate");          //Add all spawned objects ("Coordinate") to array
-        // line.SetupLine(coordinates);                                            //Send array to RenderLine script to make renderline
-
-        // //foreach (Transform *coordinate* in *MarkingTag*.transform) {
-        //     //if (*coordinate*.tag == "Coordinate") {
-        //         //coordinates += *coordinate*;
-        // //}
-        modelParent = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag);  //Find model for parent      "ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag+","+markingColour
-        // Debug.Log("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"+markingTag);
-        // Debug.Log("markingTagParent: "+modelParent.name);
+        modelParent = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag);  //Find model for parent      "ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag
     }
 
     public void SpawnPosition() {
-        if (changesBool == true) {                                              //Only if changes are allowed
+        if (changesBool == true) {                                      //Only if changes are allowed
             cursorPosition = gazeCursor.transform.position;             //Get cursor position
             SpawnCoordinate();                                          //Perform spawn
         }
     }
 
     public void SpawnCoordinate() {
-        spawnedCoordinate = Instantiate(coordinatePrefab, cursorPosition, Quaternion.identity);                   //Spawn object as child of model
+        spawnedCoordinate = Instantiate(coordinatePrefab, cursorPosition, Quaternion.identity);         //Spawn object as child of model
         spawnedCoordinate.transform.SetParent(modelParent.transform);
     }
 
@@ -63,11 +51,7 @@ public class CoordinatesInput : MonoBehaviour
         this.markingTag = markingTag;
     }
 
-    public void GetMarkingCount(int markingCount) {
-        this.markingCount = markingCount;
-    }
-
-    public void GetMarkingColour(string markingColour) {
-        this.markingColour = markingColour;
+    public void GetModelName(string modelName) {
+        this.modelName = modelName;
     }
 }

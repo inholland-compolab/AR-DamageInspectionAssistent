@@ -7,7 +7,7 @@ using SimpleJSON;
 using TMPro;
 using System.Linq;
 
-public class NewLoadSave : MonoBehaviour
+public class ViewLoad : MonoBehaviour
 {
     [SerializeField] GameObject modelParent;       //Assign Image Tracker as parent of model
     Object selectedPrefab;
@@ -32,15 +32,10 @@ public class NewLoadSave : MonoBehaviour
     string coordinatesLoad;
     string materialLoad;
 
-    string modelName;
-
     string projectFileName;
     public string projectName;
 
-    public string markingTag;
-    public string colourChoice;
     string[] colour;
-    string colourName;
     string typeName;
 
     string preLoad;
@@ -49,7 +44,6 @@ public class NewLoadSave : MonoBehaviour
     GameObject spawnedModel;
     string typeLoad;
 
-    GameObject[] coordinatesList;
     GameObject marking;
     GameObject parentPrefab;
     [SerializeField] GameObject markingPrefab;
@@ -64,25 +58,7 @@ public class NewLoadSave : MonoBehaviour
 
     int loops = 100;
     float timer = 3.0f;
-
-    InspectionButtons inspectionButtons;
-
-    string pathList;
-    string[] projectArray;
-    public List<string> projectMarkingsList = new List<string>();
-
-    [SerializeField] GameObject dropdownList;
-    [SerializeField] GameObject dropdownListValue;     //Assign dropdown label
-
-    string selectMarking;
-    string listString;
-    string saveString;
-
-    [SerializeField] GameObject listWindow;
-
-    GameObject[] numbersObjects;
     
-
 
     public void Awake()
     {
@@ -103,24 +79,6 @@ public class NewLoadSave : MonoBehaviour
 
     public void Update()
     {   
-        //Send model selection to other scripts
-        modelName = modelLoad;
-        HierarchyManager hierarchyManager = GameObject.Find("InspectionManager").GetComponent<HierarchyManager>();
-        InspectionButtons inspectionButtons = GameObject.Find("InspectionManager").GetComponent<InspectionButtons>();
-        CoordinatesInput coordinatesInput = GameObject.Find("ImageTarget/"+modelName+"(Clone)/default").GetComponent<CoordinatesInput>();
-        hierarchyManager.GetModelName(modelName);
-        inspectionButtons.GetModelName(modelName);
-        coordinatesInput.GetModelName(modelName);
-
-        //Send model selection to scripts of number objects (responsible for creating the marking tag)
-        numbersObjects = GameObject.FindGameObjectsWithTag("Number");
-        for (int i = 0; i < numbersObjects.Length - 1; i++) {
-            NumberValue numberValue = numbersObjects[i].GetComponent<NumberValue>();
-            numberValue.GetModelName(modelName);
-        }
-
-        pathList = path;
-
         //Timer to let popup wait between active and inactive
         if (timer >= 0) {
             timer = timer - Time.deltaTime;
@@ -216,92 +174,10 @@ public class NewLoadSave : MonoBehaviour
             GameObject typeObject = GameObject.Find("ImageTarget/"+modelLoad+"(Clone)/Markings/"+i+"/HoloTag(Clone)/DescriptionWindow/TypeAnswer");
             typeObject.GetComponent<TextMeshPro>().text = typeName;
         }
-
     }
 
     public void MaterialSelection() {
         var material = Resources.Load("Colours/"+materialLoad);
         selectedMaterial = material as Material; 
-    }
-    
-    public void Save() {
-        string savePath = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";     //Define project json file path
-        string jsonString = File.ReadAllText(savePath);                                                 //Read whole json file and convert to string
-
-        JSONObject ProjectJson = new JSONObject();                          //Create name object in JSON File
-        ProjectJson.Add("Project", projectName);                            //Add project name (why not nameLoad???)
-
-        ProjectJson.Add("Model", modelLoad);                               //Add project model
-
-        GameObject markingsGroup = GameObject.Find("ImageTarget/"+modelLoad+"(Clone)/Markings");    //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"
-        foreach (Transform i in markingsGroup.transform) {
-            JSONArray coordinatesSaved = new JSONArray();
-            colour = i.GetComponent<Renderer>().material.name.ToString().Split(' ');
-            colourName = colour[0];
-            Transform typeObject = i.Find("HoloTag(Clone)/DescriptionWindow/TypeAnswer");
-            typeName = typeObject.GetComponent<TextMeshPro>().text;
-            foreach (Transform x in i) {
-                if (x.tag == "Coordinate") {
-                    coordinatesSaved.Add(x.transform.localPosition.x);
-                    coordinatesSaved.Add(x.transform.localPosition.y);
-                    coordinatesSaved.Add(x.transform.localPosition.z);
-                }
-            }
-            ProjectJson.Add("Marking_"+i.name, coordinatesSaved);
-            ProjectJson.Add("Colour_"+i.name, colourName);
-            ProjectJson.Add("Type_"+i.name, typeName);
-        }
-        
-        string path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";         //Set file path
-        File.WriteAllText(path, ProjectJson.ToString());
-    }
-
-    public void List() {
-        jsonString = File.ReadAllText(pathList);
-        projectArray = jsonString.Split('"');
-        projectMarkingsList.Clear();
-        int x = -1;
-        for (int i = 9; i < projectArray.Length; i++) {
-            x = x + 1;
-            if ( ((x % 10) == 0) && (x <= projectArray.Length - 9) ) {
-                projectMarkingsList.Add(projectArray[i].ToString());
-            }
-        }
-        projectMarkingsList.Sort();
-        dropdown = dropdownList.GetComponent<TMP_Dropdown>();
-        dropdown.ClearOptions();
-        dropdown.AddOptions(startList);
-        dropdown.AddOptions(projectMarkingsList);
-    }
-    
-    public void ListDelete() {
-        dropdown = dropdownList.GetComponent<TMP_Dropdown>();
-        selectMarking = dropdownListValue.GetComponent<TextMeshProUGUI>().text;
-        for (int i = 0; i < projectArray.Length; i++) {
-            if (projectArray[i].ToString() != selectMarking.ToString()) {
-                listString = listString + (projectArray[i].ToString()) + '"';
-            }
-            else { i = i + 9; }
-        }
-        saveString = listString.Substring(0, listString.Length - 2) + "}";
-        File.WriteAllText(path, saveString);
-        
-        bool listBool = false;
-        InspectionButtons inspectionButtons = GameObject.Find("InspectionManager").GetComponent<InspectionButtons>();
-        inspectionButtons.GetListBool(listBool);
-
-        GameObject modelParent = GameObject.Find("ImageTarget");
-        foreach (Transform i in modelParent.transform) {
-            Destroy(i.gameObject);
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    public void GetMarkingTag(string markingTag) {
-        this.markingTag = markingTag;
-    }
-
-    public void GetColour(string colourChoice) {
-        this.colourChoice = colourChoice;
     }
 }

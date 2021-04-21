@@ -8,7 +8,6 @@ public class ColourValue : MonoBehaviour
     [SerializeField] GameObject pinkButton;
     [SerializeField] GameObject orangeButton;
     string markingColour;
-    Component[] components;
     Microsoft.MixedReality.Toolkit.UI.Interactable buttonStatePink;
     Microsoft.MixedReality.Toolkit.UI.Interactable buttonStateGreen;
     Microsoft.MixedReality.Toolkit.UI.Interactable buttonStateOrange;
@@ -23,11 +22,9 @@ public class ColourValue : MonoBehaviour
     public void Update() 
     {
         HierarchyManager hierarchyManager = GameObject.Find("InspectionManager").GetComponent<HierarchyManager>();
-        CoordinatesInput coordinatesInput = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/default").GetComponent<CoordinatesInput>();   //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/default"
         hierarchyManager.GetMarkingColour(markingColour);
-        coordinatesInput.GetMarkingColour(markingColour);
-        Debug.Log(markingColour);
     }
+
     public void Green() {
         markingColour = "Green";
         buttonStatePink.IsToggled = false;

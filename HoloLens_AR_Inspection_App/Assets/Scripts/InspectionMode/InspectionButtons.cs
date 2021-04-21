@@ -13,6 +13,8 @@ public class InspectionButtons : MonoBehaviour
     [SerializeField] public GameObject[] inspectionButtons;
     [SerializeField] public GameObject[] nonChangesButtons;
     [SerializeField] public GameObject projectButton;
+
+    string modelName;
     
     public bool startBool = true;
     public bool changesBool = false;
@@ -22,7 +24,6 @@ public class InspectionButtons : MonoBehaviour
 
     GameObject spawnComponent;
     CoordinatesInput spawnScript;
-    LoadSaveManager loadSaveManager;
 
     string loadProjectName;
 
@@ -42,11 +43,10 @@ public class InspectionButtons : MonoBehaviour
         if (selectBool == true) {
             projectButton.SetActive(false);
         }
-        Debug.Log("changes: "+changesBool);
     }
 
     public void ButtonChanges() {
-        spawnComponent = GameObject.Find("ImageTarget/RevEng_NoseCone_Fokker100(Clone)/default");     //Find GameObject within parent with script
+        spawnComponent = GameObject.Find("ImageTarget/"+modelName+"(Clone)/default");     //Find GameObject within parent with script
         spawnScript = spawnComponent.GetComponent<CoordinatesInput>();                                //Assign script variable
         
         if (startBool == true && changesBool == false) {
@@ -123,6 +123,10 @@ public class InspectionButtons : MonoBehaviour
     }
     ////////////////////////////////////////////////////////////////
 
+    public void GetModelName(string modelName) {
+        this.modelName = modelName;
+    }
+    
     public void GetListBool(bool listBool) {
         this.listBool = listBool;
     }

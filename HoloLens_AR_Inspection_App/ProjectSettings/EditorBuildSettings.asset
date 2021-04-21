@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: 0342bb176af7a1747aad99163b4eed9e
   - enabled: 1
     path: Assets/Scenes/ViewMode.unity
-    guid: a50cc732d17b3334fabd9b361fe49941
+    guid: e4e87721c5ed66145be6b686835ee0ba
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c711857324f92d74f8da325f7dcfd9c0, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fd28d4096f560b743a6cdf80e171c493, type: 2}
