@@ -125,8 +125,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
+  m_Convex: 0
+  m_CookingOptions: -1
   m_Mesh: {fileID: -2432090755550338912, guid: 2ea88befe239f114eb029fcee74ceb04, type: 3}
 --- !u!114 &1232033070720450912
 MonoBehaviour:
@@ -186,8 +186,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changesBool: 0
   coordinatePrefab: {fileID: 2936720399325576639, guid: b151e9493f585644fa2c75da6040af9a, type: 3}
-  coordinates: []
-  line: {fileID: 0}
 --- !u!1 &4943767073855532402
 GameObject:
   m_ObjectHideFlags: 0
