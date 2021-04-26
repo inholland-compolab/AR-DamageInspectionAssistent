@@ -6,6 +6,7 @@ using TMPro;
 public class ChangesButtons : MonoBehaviour
 {
     [SerializeField] GameObject addWindow;
+    [SerializeField] GameObject changesWindow;
 
     GameObject[] coordinatesList;
 

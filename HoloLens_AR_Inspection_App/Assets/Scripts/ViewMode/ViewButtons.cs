@@ -21,13 +21,12 @@ public class ViewButtons : MonoBehaviour
     
     public void Update()
     {
-        Debug.Log("project: "+projectBool);
-        Debug.Log("select: "+selectBool);
         inspectionMenuTitle.SetActive(startBool);
         projectWindow.SetActive(projectBool);
         if (selectBool == true) {
             projectButton.SetActive(false);
         }
+        else { projectButton.SetActive(true); }
     }
 
     public void ButtonProject() {
@@ -54,6 +53,26 @@ public class ViewButtons : MonoBehaviour
     }
 
     public void ButtonBack() {
-        SceneLoader.Load(SceneLoader.Scene.StartScreen);
+        //Reset buttons to initial state
+        startBool = true;
+        projectBool = false;
+        selectBool = false;
+        
+        //SceneManagement needed?
+        //SceneLoader.Load(SceneLoader.Scene.StartScreen);
+    }
+
+    public void ButtonBackToStart() {                   //Back button for hololens 2 configuration
+        GameObject startScene = GameObject.FindWithTag("Start");
+        foreach (Transform i in startScene.transform) {
+            i.gameObject.SetActive(true);
+        }
+        GameObject viewScene = GameObject.FindWithTag("View");
+        Destroy(viewScene);
+
+        GameObject imageTarget = GameObject.Find("ImageTarget");
+        foreach (Transform i in imageTarget.transform) {
+            Destroy(i.gameObject);
+        }
     }
 }

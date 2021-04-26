@@ -112,14 +112,34 @@ public class InspectionButtons : MonoBehaviour
     public void ButtonList() {
         listBool = true;
         startBool = false;
+        for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons INactive
+            inspectionButtons[i].SetActive(false);
+        }
     }
     public void ListBack() {
         listBool = false;
         startBool = true;
+        for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons INactive
+            inspectionButtons[i].SetActive(true);
+        }
     }
 
     public void ButtonBack() {
         SceneLoader.Load(SceneLoader.Scene.StartScreen);
+    }
+
+    public void ButtonBackToStart() {                   //Back button for hololens 2 configuration
+        GameObject startScene = GameObject.FindWithTag("Start");
+        foreach (Transform i in startScene.transform) {
+            i.gameObject.SetActive(true);
+        }
+        GameObject inspectionScene = GameObject.FindWithTag("Inspection");
+        Destroy(inspectionScene);
+
+        GameObject imageTarget = GameObject.Find("ImageTarget");
+        foreach (Transform i in imageTarget.transform) {
+            Destroy(i.gameObject);
+        }
     }
     ////////////////////////////////////////////////////////////////
 

@@ -6,17 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartScreen.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/RegisterMode.unity
-    guid: a4b5f1caa63763b4e8f143bd05bf587a
-  - enabled: 1
-    path: Assets/Scenes/InspectionMode.unity
-    guid: 0342bb176af7a1747aad99163b4eed9e
-  - enabled: 1
-    path: Assets/Scenes/ViewMode.unity
-    guid: e4e87721c5ed66145be6b686835ee0ba
+    path: Assets/Scenes/MergeScenes.unity
+    guid: 18c5561ba0f856d4eb9ff54007f754fa
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c711857324f92d74f8da325f7dcfd9c0, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fd28d4096f560b743a6cdf80e171c493, type: 2}

@@ -9,7 +9,7 @@ using System.Linq;
 
 public class ViewLoad : MonoBehaviour
 {
-    [SerializeField] GameObject modelParent;       //Assign Image Tracker as parent of model
+    GameObject modelParent;       //Assign Image Tracker as parent of model
     Object selectedPrefab;
 
     [SerializeField] GameObject coordinatePrefab;
@@ -114,6 +114,7 @@ public class ViewLoad : MonoBehaviour
         //Spawn Model
         var prefab = Resources.Load("3DModels/"+modelLoad);                 //Load nose cone prefab corresponding to the model name
         selectedPrefab = prefab as GameObject;                              //Set prefab variable
+        modelParent = GameObject.Find("ImageTarget");
         Instantiate(selectedPrefab, modelParent.transform);                 //Spawn prefab (wanted nose cone) as child of Target Image
 
         spawnedModel = GameObject.Find(modelLoad+"(Clone)");

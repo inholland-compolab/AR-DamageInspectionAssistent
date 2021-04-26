@@ -28,4 +28,13 @@ public class SaveProject : MonoBehaviour
         File.WriteAllText(path, ProjectNameJson.ToString()+                                             //Create text file / Overwrite previous text file
         ProjectModelJson.ToString());
     }
+
+    public void ButtonBackToStart() {                                                //Button to go back to startscene for hololens 2 configuration
+        GameObject startScene = GameObject.FindWithTag("Start");
+        foreach (Transform i in startScene.transform) {
+            i.gameObject.SetActive(true);
+        }
+        GameObject registerScene = GameObject.FindWithTag("Register");
+        Destroy(registerScene);
+        }
 }

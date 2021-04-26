@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Coordinate
   - Number
+  - Start
+  - Register
+  - Inspection
+  - View
   layers:
   - Default
   - TransparentFX

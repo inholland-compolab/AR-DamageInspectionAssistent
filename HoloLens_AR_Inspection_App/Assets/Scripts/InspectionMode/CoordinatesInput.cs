@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.Physics;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.Input;
 
 public class CoordinatesInput : MonoBehaviour
 {
@@ -22,6 +24,10 @@ public class CoordinatesInput : MonoBehaviour
 
     RaycastHit hit;
 
+    Vector3 startPoint;
+    Vector3 endPoint;
+    GameObject hitObject;
+
 
     void Start()
     {
@@ -32,20 +38,43 @@ public class CoordinatesInput : MonoBehaviour
     {
         modelParent = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag);  //Find model for parent      "ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag
 
-        cameraPosition = GameObject.FindWithTag("MainCamera").transform.position;
-        cursorPosition = (gazeCursor.transform.position) - cameraPosition;
-        Physics.Raycast(cameraPosition, cursorPosition, out hit, Mathf.Infinity);
+        
+
+        //cameraPosition = GameObject.FindWithTag("MainCamera").transform.position;
+        //cursorPosition = (gazeCursor.transform.position) - cameraPosition;
+        //Physics.Raycast(cameraPosition, cursorPosition, out hit, Mathf.Infinity);
             
     }
 
     public void SpawnPosition() {
         if (changesBool == true) {                                      //Only if changes are allowed
+        foreach(var source in MixedRealityToolkit.InputSystem.DetectedInputSources)
+        {
+            // Ignore anything that is not a hand because we want articulated hands
+            if (source.SourceType == Microsoft.MixedReality.Toolkit.Input.InputSourceType.Hand)
+            {
+                foreach (var p in source.Pointers)
+                {
+                    if (p is IMixedRealityNearPointer)
+                    {
+                        // Ignore near pointers, we only want the rays
+                        continue;
+                    }
+                    if (p.Result != null)
+                    {
+                        startPoint = p.Position;
+                        endPoint = p.Result.Details.Point;
+                        hitObject = p.Result.Details.Object;
+                    }
+                }
+            }
+        }
             SpawnCoordinate();                                          //Perform spawn
         }
     }
 
     public void SpawnCoordinate() {
-        spawnedCoordinate = Instantiate(coordinatePrefab, hit.point, Quaternion.identity);         //Spawn object as child of model
+        spawnedCoordinate = Instantiate(coordinatePrefab, endPoint, Quaternion.identity);         //Spawn object as child of model
         spawnedCoordinate.transform.SetParent(modelParent.transform);
     }
 
