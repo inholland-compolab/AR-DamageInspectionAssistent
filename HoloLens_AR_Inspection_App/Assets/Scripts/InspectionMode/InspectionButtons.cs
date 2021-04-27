@@ -27,11 +27,17 @@ public class InspectionButtons : MonoBehaviour
 
     string loadProjectName;
 
+    [SerializeField] GameObject positioningPrefab;
+    bool positioningBool = false;
+
+    [SerializeField] GameObject positioningButtons;
+
     public void Start()
     {
         for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons INactive
             inspectionButtons[i].SetActive(false);
         }
+        positioningButtons.SetActive(false);
     }
     
     public void Update()
@@ -105,6 +111,7 @@ public class InspectionButtons : MonoBehaviour
         for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons active
             inspectionButtons[i].SetActive(true);
         }
+        positioningButtons.SetActive(true);
         startBool = true;
         projectBool = false;
     }
@@ -141,6 +148,20 @@ public class InspectionButtons : MonoBehaviour
             Destroy(i.gameObject);
         }
     }
+
+    public void OpenPositioning() {
+        if (positioningBool == false) {
+            Instantiate(positioningPrefab);
+            positioningBool = true;
+            return;
+        }
+        if (positioningBool == true) {
+            Destroy(GameObject.Find(positioningPrefab.name+"(Clone)"));
+            positioningBool = false;
+            return;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////
 
     public void GetModelName(string modelName) {

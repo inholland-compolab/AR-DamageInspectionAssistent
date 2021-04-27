@@ -18,13 +18,24 @@ public class ViewButtons : MonoBehaviour
     CoordinatesInput spawnScript;
 
     string loadProjectName;
+
+    [SerializeField] GameObject positioningPrefab;
+    bool positioningBool = false;
+
+    [SerializeField] GameObject positioningButtons;
     
+    public void Start() 
+    {
+        positioningButtons.SetActive(false);
+    }
+
     public void Update()
     {
         inspectionMenuTitle.SetActive(startBool);
         projectWindow.SetActive(projectBool);
         if (selectBool == true) {
             projectButton.SetActive(false);
+            positioningButtons.SetActive(true);
         }
         else { projectButton.SetActive(true); }
     }
@@ -73,6 +84,19 @@ public class ViewButtons : MonoBehaviour
         GameObject imageTarget = GameObject.Find("ImageTarget");
         foreach (Transform i in imageTarget.transform) {
             Destroy(i.gameObject);
+        }
+    }
+
+    public void OpenPositioning() {
+        if (positioningBool == false) {
+            Instantiate(positioningPrefab);
+            positioningBool = true;
+            return;
+        }
+        if (positioningBool == true) {
+            Destroy(GameObject.Find(positioningPrefab.name+"(Clone)"));
+            positioningBool = false;
+            return;
         }
     }
 }
