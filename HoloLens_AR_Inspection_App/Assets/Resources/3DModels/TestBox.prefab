@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 901479854910967204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8937758750663577224}
   m_RootOrder: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8909b9fd1ecb2d7408c5fc299f3843b8, type: 2}
+  - {fileID: 2100000, guid: a55ccbf016d4a7149a5c00fad4e41b36, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8937758750663577224}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TestBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,8 +209,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4577122672155125090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.1335, z: 0}
+  m_LocalScale: {x: 0.307, y: 0.237, z: 0.218}
   m_Children:
   - {fileID: 5693931755603298494}
   - {fileID: 4709663993305515423}

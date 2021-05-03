@@ -5,7 +5,18 @@ using Vuforia;
 
 public class TrackingManager : MonoBehaviour
 {
-    bool targetingBool = true;
+    bool targetingBool;
+
+    public void Awake() 
+    {
+        targetingBool = true;
+        TrackerManager.Instance.GetTracker<ObjectTracker>().Start();
+    }
+
+    // public void EnableTracking() {
+    //     targetingBool = true;
+    //     TrackerManager.Instance.GetTracker<ObjectTracker>().Start();
+    // }
 
     public void TrackingClick() {
         if (targetingBool == true) {

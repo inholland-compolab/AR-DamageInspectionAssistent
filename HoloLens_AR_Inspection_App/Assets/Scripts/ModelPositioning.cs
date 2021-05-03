@@ -28,9 +28,27 @@ public class ModelPositioning : MonoBehaviour
     bool sliderRightRotBool = false;
     bool sliderForwardRotBool = false;
 
+    Vector3[] startPosition;
+    Vector3[] startRotation;
+
+    public float speed = 0.1f;
+
+    public List<Vector3> positionList = new List<Vector3>();
+    public List<Quaternion> rotationList = new List<Quaternion>();
+
     public void Awake() 
     {
         imageTarget = GameObject.Find("ImageTarget");
+
+        positionList.Clear();
+        rotationList.Clear();
+
+        foreach(Transform i in imageTarget.transform) {
+            positionList.Add(i.position);
+            rotationList.Add(i.rotation);
+        }
+
+        Debug.Log(positionList.ToString());
     }
 
     public void Update() 
@@ -39,29 +57,29 @@ public class ModelPositioning : MonoBehaviour
             //Translate
             if (sliderUpBool == true) {
                 upValue = sliderUp.GetComponent<PinchSlider>().SliderValue;
-                i.Translate(Vector3.up * (upValue-0.5f) * Time.deltaTime);
+                i.Translate(Vector3.up * (upValue-0.5f) * speed * Time.deltaTime, imageTarget.transform);
             }
             if (sliderRightBool == true) {
                 rightValue = sliderRight.GetComponent<PinchSlider>().SliderValue;
-                i.Translate(-1 * Vector3.left * (rightValue-0.5f) * Time.deltaTime);
+                i.Translate(-1 * Vector3.left * (rightValue-0.5f) * speed * Time.deltaTime, imageTarget.transform);
             }
             if (sliderForwardBool == true) {
                 forwardValue = sliderForward.GetComponent<PinchSlider>().SliderValue;
-                i.Translate(Vector3.forward * (forwardValue-0.5f) * Time.deltaTime);
+                i.Translate(Vector3.forward * (forwardValue-0.5f) * speed * Time.deltaTime, imageTarget.transform);
             }
 
             //Rotate
             if (sliderUpRotBool == true) {
-                upRotValue = sliderUp.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(Vector3.up * (upRotValue-0.5f) * Time.deltaTime);       //transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
+                upRotValue = sliderRotUp.GetComponent<PinchSlider>().SliderValue;
+                i.Rotate(0, speed * (upRotValue-0.5f), 0, Space.World);       //transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
             }
             if (sliderRightRotBool == true) {
-                rightRotValue = sliderRight.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(-1 * Vector3.left * (rightRotValue-0.5f) * Time.deltaTime);
+                rightRotValue = sliderRotRight.GetComponent<PinchSlider>().SliderValue;
+                i.Rotate(speed * (rightRotValue-0.5f), 0, 0, Space.World);
             }
             if (sliderForwardRotBool == true) {
-                forwardRotValue = sliderForward.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(Vector3.forward * (forwardRotValue-0.5f) * Time.deltaTime);
+                forwardRotValue = sliderRotForward.GetComponent<PinchSlider>().SliderValue;
+                i.Rotate(0, 0, speed * (forwardRotValue-0.5f), Space.World);
             }
         }
     }
@@ -104,5 +122,14 @@ public class ModelPositioning : MonoBehaviour
         sliderRotUp.GetComponent<PinchSlider>().SliderValue = 0.5f;
         sliderRotRight.GetComponent<PinchSlider>().SliderValue = 0.5f;
         sliderRotForward.GetComponent<PinchSlider>().SliderValue = 0.5f;
+    }
+
+    public void Reset() {
+        int x = -1;
+        foreach(Transform i in imageTarget.transform) {
+            x = x + 1;
+            i.position = positionList[x];
+            i.rotation = rotationList[x];
+        }
     }
 }
