@@ -71,15 +71,15 @@ public class ModelPositioning : MonoBehaviour
             //Rotate
             if (sliderUpRotBool == true) {
                 upRotValue = sliderRotUp.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(0, speed * (upRotValue-0.5f), 0, Space.World);       //transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
+                i.Rotate(0, speed * 4f * (upRotValue-0.5f), 0, Space.World);       //transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
             }
             if (sliderRightRotBool == true) {
                 rightRotValue = sliderRotRight.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(speed * (rightRotValue-0.5f), 0, 0, Space.World);
+                i.Rotate(speed * 4f * (rightRotValue-0.5f), 0, 0, Space.World);
             }
             if (sliderForwardRotBool == true) {
                 forwardRotValue = sliderRotForward.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(0, 0, speed * (forwardRotValue-0.5f), Space.World);
+                i.Rotate(0, 0, speed * 4f * (forwardRotValue-0.5f), Space.World);
             }
         }
     }
