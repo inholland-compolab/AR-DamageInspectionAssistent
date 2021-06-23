@@ -13,24 +13,14 @@ public class StartButtons : MonoBehaviour
     public bool startBool = true;
     public bool infoBool = false;
 
+    //Check each frame for activation or deactivation of different windows
     public void Update()
     {
         startMenuTitle.SetActive(startBool);
         infoWindow.SetActive(infoBool);
     }
 
-    public void ButtonRegister() {
-        SceneLoader.Load(SceneLoader.Scene.RegisterMode);
-    }
-
-    public void ButtonInspection() {
-        SceneLoader.Load(SceneLoader.Scene.InspectionMode);
-    }
-
-    public void ButtonView() {
-        SceneLoader.Load(SceneLoader.Scene.ViewMode);
-    }
-
+    //Function to determine if the information window is open or not
     public void ButtonInfo() {
         if (startBool == true && infoBool == false) {
             startBool = false;
@@ -48,6 +38,16 @@ public class StartButtons : MonoBehaviour
         }
     }
 
+    //Functions to open scenes (Scenes were used for HoloLens 1 version)
+    public void ButtonRegister() {
+        SceneLoader.Load(SceneLoader.Scene.RegisterMode);
+    }
+    public void ButtonInspection() {
+        SceneLoader.Load(SceneLoader.Scene.InspectionMode);
+    }
+    public void ButtonView() {
+        SceneLoader.Load(SceneLoader.Scene.ViewMode);
+    }
     public void ButtonStart() {
         SceneLoader.Load(SceneLoader.Scene.StartScreen);
     }

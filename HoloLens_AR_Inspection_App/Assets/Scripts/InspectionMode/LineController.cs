@@ -12,17 +12,18 @@ public class LineController : MonoBehaviour
     Material material;
     Material selectedMaterial;
 
-    // Awake is called when scene is loaded
+    //Set variable to LineRenderer component at start of script 
     private void Awake() 
     {
         GameObject currentGameObject = this.gameObject;
         lr = currentGameObject.GetComponent<LineRenderer>();
     }
     
-    // Update is called once per frame
+    //The LineRenderer searches for coordinates to create a line every frame
     void Update()
     {
-        coordinates = GameObject.FindGameObjectsWithTag("Coordinate");          //Add all spawned objects ("Coordinate") to array
+        //Add all spawned objects ("Coordinate") to array
+        coordinates = GameObject.FindGameObjectsWithTag("Coordinate");
         coordinatesCount.Clear();
         foreach (Transform i in lr.transform.parent.transform) {
             coordinatesCount.Add(i.name);
@@ -32,7 +33,7 @@ public class LineController : MonoBehaviour
         lr.positionCount = coordinatesCount.Count - 2;
         }
 
-        if (coordinates != null) {                                       //Not begin before array is created
+        if (coordinates != null) {  //Don't start before array is created
             for (int i = 0; i < coordinates.Length; i++) {
                 if (coordinates[i].transform.parent.name == lr.transform.parent.name) {
                     lr.SetPosition((i-otherCoordinates.Count), coordinates[i].transform.position);    //For all array elements: Draw line

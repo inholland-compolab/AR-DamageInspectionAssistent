@@ -1,0 +1,7 @@
+This folder contains all scripts for the Start Menu.
+
+InfoWindow.cs
+This script has functions to show the corresponding information when the information window is set to Register, Inspection or View Mode.
+
+StartButtons.cs
+This script contains functions for the buttons located in the Start Menu.

@@ -1,0 +1,7 @@
+This folder contains the scripts for the View Mode.
+
+ViewButtons.cs
+This script shows all functions that are used by buttons located in the View Mode menu.
+
+ViewLoad.cs
+This script is responsible for loading the 3D model and its markings and info of a project.

@@ -14,7 +14,7 @@ public class SaveProject : MonoBehaviour
     string projectModel;                         //Assign variable
 
 
-
+    //Function to save the made project to the HoloLens
     public void Save() {
         JSONObject ProjectNameJson = new JSONObject();                          //Create name object in JSON File
         projectName = inputName.GetComponent<TextMeshProUGUI>().text;           //Set project name from input field
@@ -29,11 +29,15 @@ public class SaveProject : MonoBehaviour
         ProjectModelJson.ToString());
     }
 
-    public void ButtonBackToStart() {                                                //Button to go back to startscene for hololens 2 configuration
+    //Button to go back to startscene for Hololens 2 version
+    public void ButtonBackToStart() {
+        //Open start menu
         GameObject startScene = GameObject.FindWithTag("Start");
         foreach (Transform i in startScene.transform) {
             i.gameObject.SetActive(true);
         }
+
+        //Remove register menu
         GameObject registerScene = GameObject.FindWithTag("Register");
         Destroy(registerScene);
         }

@@ -12,10 +12,10 @@ public class ViewLoad : MonoBehaviour
     GameObject modelParent;       //Assign Image Tracker as parent of model
     Object selectedPrefab;
 
-    [SerializeField] GameObject coordinatePrefab;
+    [SerializeField] GameObject coordinatePrefab;   //Assign prefab for the coordinate gameobject
     GameObject spawnedCoordinate;
 
-    [SerializeField] GameObject noPathPopUp;       //Assign no valid path pop up
+    [SerializeField] GameObject noPathPopUp;       //Assign no valid path pop up window
 
     [SerializeField] GameObject inputProject;      //Assign dropdown
     [SerializeField] GameObject dropdownValue;     //Assign dropdown label
@@ -56,10 +56,11 @@ public class ViewLoad : MonoBehaviour
     [SerializeField] GameObject tagPrefab;
     GameObject tagObject;
 
-    int loops = 100;
-    float timer = 3.0f;
+    int loops = 100;        //Set amount of loops to go through the marking numbers (loops = max markings)
+    float timer = 3.0f;     //Timer to set duration of no path found error
     
 
+    //At the start of the script, immediately search for the saved projects and populate the dropdown menu with them.
     public void Awake()
     {
         DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);
@@ -77,9 +78,11 @@ public class ViewLoad : MonoBehaviour
         dropdown.AddOptions(projectList);                           //Set other values of dropdown to all available project names
     }
 
+
+    //This script has to run the timer to get the right duration for the no path found error.
     public void Update()
     {   
-        //Timer to let popup wait between active and inactive
+        //Timer to let no path found popup wait between active and inactive
         if (timer >= 0) {
             timer = timer - Time.deltaTime;
         }
@@ -89,10 +92,14 @@ public class ViewLoad : MonoBehaviour
         }
     }
 
+
+    //No path found timer back to set value
     public void SetTimer() {
         timer = 3.0f;
     }
 
+
+    //The Load function has to load all information from a saved project and spawn all corresponding gameobjects.
     public void Load() {
         //Get selected projectName
         projectFileName = dropdownValue.GetComponent<TextMeshProUGUI>().text;                       //Get value from dropdown
@@ -136,8 +143,6 @@ public class ViewLoad : MonoBehaviour
             marking.GetComponent<Renderer>().material = selectedMaterial;
             
             for (int x = 0; x < arrayLoad.Length; x++){
-                //Debug.Log("Marking_"+i+", array: "+arrayLoad[x]);
-                // if (arrayLoad[x] != null) {
                     if ( ((x % 3) == 0) && (x <= arrayLoad.Length-2) ) {
                         spawnLoad.x = float.Parse(arrayLoad[x].Trim('['));
                         spawnLoad.y = float.Parse(arrayLoad[(x+1)]);
@@ -148,10 +153,6 @@ public class ViewLoad : MonoBehaviour
                         spawnedCoordinate.transform.SetParent(marking.transform, false);
                         spawnedCoordinate.transform.localPosition = spawnLoad;
                     }
-                // }
-                // else {
-                //     Destroy(marking.transform);
-                // }
             }
         }
 

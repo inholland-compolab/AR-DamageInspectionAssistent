@@ -12,19 +12,25 @@ public class ChangesButtons : MonoBehaviour
 
     public void Awake() 
     {
-        addWindow.SetActive(false);
+        addWindow.SetActive(false);     //Don't show the Add window
     }
 
+    //Activate Add window
     public void AddButton() {
-        addWindow.SetActive(true);      //Let user select damage number and colour
+        addWindow.SetActive(true);      //Show Add window and let user select damage number, type and colour
     }
 
+    //Delete last placed coordinate
     public void UndoButton() {
-        coordinatesList = GameObject.FindGameObjectsWithTag("Coordinate");
-        GameObject.Destroy(coordinatesList[coordinatesList.Length-1]);
+        coordinatesList = GameObject.FindGameObjectsWithTag("Coordinate");  //Find coordinates
+        GameObject.Destroy(coordinatesList[coordinatesList.Length-1]);      //Delete last coordinate
     }
 
-    /////////////////////////////////////Add Window////////////////////////////////////
+
+    /////////////////////////////////////Button in Add Window////////////////////////////////////
+    //When the number, type and color are selected, the Add window can close after confirmation
+    
+    //Disable Add window
     public void Select() {
         addWindow.SetActive(false);
     }

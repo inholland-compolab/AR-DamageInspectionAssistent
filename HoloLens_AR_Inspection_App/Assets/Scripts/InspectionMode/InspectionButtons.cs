@@ -34,7 +34,8 @@ public class InspectionButtons : MonoBehaviour
 
     public void Start()
     {
-        for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons INactive
+        //Set all inspection buttons INactive
+        for (int i = 0; i < inspectionButtons.Length; i++) {
             inspectionButtons[i].SetActive(false);
         }
         positioningButtons.SetActive(false);
@@ -42,10 +43,13 @@ public class InspectionButtons : MonoBehaviour
     
     public void Update()
     {
+        //Check each frame which windows are active / INactive
         inspectionMenuTitle.SetActive(startBool);
         changesWindow.SetActive(changesBool);
         projectWindow.SetActive(projectBool);
         listWindow.SetActive(listBool);
+        
+        //Disable project button when a project is selected
         if (selectBool == true) {
             projectButton.SetActive(false);
         }
@@ -53,7 +57,7 @@ public class InspectionButtons : MonoBehaviour
 
     public void ButtonChanges() {
         spawnComponent = GameObject.Find("ImageTarget/"+modelName+"(Clone)/default");     //Find GameObject within parent with script
-        spawnScript = spawnComponent.GetComponent<CoordinatesInput>();                                //Assign script variable
+        spawnScript = spawnComponent.GetComponent<CoordinatesInput>();                    //Assign nose cone script variable
         
         if (startBool == true && changesBool == false) {
             startBool = false;
@@ -89,6 +93,7 @@ public class InspectionButtons : MonoBehaviour
         }
     }
 
+    //Function to determine if bool for project window is true or false
     public void ButtonProject() {
         if (startBool == true && projectBool == false) {
             startBool = false;
@@ -106,6 +111,7 @@ public class InspectionButtons : MonoBehaviour
         }
     }
 
+    //Function to enable/disable buttons after project is selected
     public void ButtonSelect() {
         selectBool = true;                                          //Get button specific bool when pressed
         for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons active
@@ -116,6 +122,7 @@ public class InspectionButtons : MonoBehaviour
         projectBool = false;
     }
 
+    //Function to open window with list of markings
     public void ButtonList() {
         listBool = true;
         startBool = false;
@@ -123,32 +130,42 @@ public class InspectionButtons : MonoBehaviour
             inspectionButtons[i].SetActive(false);
         }
     }
+
+    //Function to close list of markings
     public void ListBack() {
         listBool = false;
         startBool = true;
-        for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons INactive
+        for (int i = 0; i < inspectionButtons.Length; i++) {        //Set all inspection buttons active
             inspectionButtons[i].SetActive(true);
         }
     }
 
+    //Leave inspection mode scene (Scenes were used for HoloLens 1 version)
     public void ButtonBack() {
         SceneLoader.Load(SceneLoader.Scene.StartScreen);
     }
 
-    public void ButtonBackToStart() {                   //Back button for hololens 2 configuration
+    //Back button to leave inspection mode (for hololens 2 version)
+    public void ButtonBackToStart() {
+        //Show start menu
         GameObject startScene = GameObject.FindWithTag("Start");
         foreach (Transform i in startScene.transform) {
             i.gameObject.SetActive(true);
         }
+
+        //Remove inspection menus
         GameObject inspectionScene = GameObject.FindWithTag("Inspection");
         Destroy(inspectionScene);
 
+
+        //Remove 3D model and children from ImageTarget gameobject
         GameObject imageTarget = GameObject.Find("ImageTarget");
         foreach (Transform i in imageTarget.transform) {
             Destroy(i.gameObject);
         }
     }
 
+    //Function to open/close positioning window to manually adjust the position and rotation of the 3D model
     public void OpenPositioning() {
         if (positioningBool == false) {
             Instantiate(positioningPrefab);
@@ -163,11 +180,14 @@ public class InspectionButtons : MonoBehaviour
     }
 
     ////////////////////////////////////////////////////////////////
+    //Functions to receive variables from other scripts
 
+    //Receive modelName variable
     public void GetModelName(string modelName) {
         this.modelName = modelName;
     }
     
+    //Receive listBool variable
     public void GetListBool(bool listBool) {
         this.listBool = listBool;
     }

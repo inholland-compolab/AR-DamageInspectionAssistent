@@ -1,0 +1,7 @@
+In the first HoloLens 1 version, each mode had its own scene. This was an great solution to keep a clear overview of all menus and windows within that scene.
+
+Then the app needed adjustments to run on the HoloLens 2. The HoloLens 2 is a more advanced device and provides a better experience. However, the HoloLens 2 needs a specific structured scene manager (MRTK provides such a scene manager). Because a simple scene manager was used, the HoloLens 2 version of the app crashed a lot when switching between scenes.
+
+To avoid this, the menus and windows are placed in a prefab. These prefabs can be spawned, destroyed, activated or deactivated. Due to limited programming time, this was an easier solution than the special scene manager.
+
+Converting the scenes to prefabs resulted into changes within the scripts and references. Because some buttons and scripts are in a prefab, it is not always possible to refer to them. This is solved by relocating some functions and search for a certain gameobject within the Unity Hierarchy tree. 

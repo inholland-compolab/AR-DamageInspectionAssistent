@@ -36,18 +36,14 @@ public class CoordinatesInput : MonoBehaviour
 
     void Update()
     {
-        modelParent = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag);  //Find model for parent      "ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag
-
-        
-
-        //cameraPosition = GameObject.FindWithTag("MainCamera").transform.position;
-        //cursorPosition = (gazeCursor.transform.position) - cameraPosition;
-        //Physics.Raycast(cameraPosition, cursorPosition, out hit, Mathf.Infinity);
-            
+        //Find model for parent   
+        modelParent = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag);   
     }
 
     public void SpawnPosition() {
-        if (changesBool == true) {                                      //Only if changes are allowed
+        if (changesBool == true) {      //Only allow spawning coordinates when changes are allowed (changes button is set to on)
+        
+        //Code for pointer rays:
         foreach(var source in MixedRealityToolkit.InputSystem.DetectedInputSources)
         {
             // Ignore anything that is not a hand because we want articulated hands
@@ -69,24 +65,31 @@ public class CoordinatesInput : MonoBehaviour
                 }
             }
         }
-            SpawnCoordinate();                                          //Perform spawn
+            
+            SpawnCoordinate();  //Perform spawn function
         }
     }
 
+    //Spawn function
     public void SpawnCoordinate() {
-        spawnedCoordinate = Instantiate(coordinatePrefab, endPoint, Quaternion.identity);         //Spawn object as child of model
-        spawnedCoordinate.transform.SetParent(modelParent.transform);
+        spawnedCoordinate = Instantiate(coordinatePrefab, endPoint, Quaternion.identity);         //Spawn object
+        spawnedCoordinate.transform.SetParent(modelParent.transform);       //Set coordinate as child of model
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    //Functions to receive variables from other scripts
+
+    //Get changesBool variable
     public void ChangesToggled(bool changesBool) {
         this.changesBool = changesBool;
     }
     
+    //Get markingTag variable
     public void GetMarkingTag(string markingTag) {
         this.markingTag = markingTag;
     }
 
+    //Get modelName variable
     public void GetModelName(string modelName) {
         this.modelName = modelName;
     }

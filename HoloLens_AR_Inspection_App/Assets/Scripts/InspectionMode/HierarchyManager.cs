@@ -5,11 +5,6 @@ using TMPro;
 
 public class HierarchyManager : MonoBehaviour
 {
-    //If marking tag inserted
-        //Create child named "Tag_*number*" of Markings parent
-    //If saved
-        //Move all created coordinates as child to Tag_*number* parent
-
     GameObject parentPrefab;
     [SerializeField] GameObject markingPrefab;
     [SerializeField] GameObject lineRendererPrefab;
@@ -31,50 +26,62 @@ public class HierarchyManager : MonoBehaviour
 
     public void Update() 
     {
-        parentPrefab = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings");    //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"
+        //Search for model and set model as parentPrefab
+        parentPrefab = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings");
     }
 
+    //Function to create the marking
     public void MarkingTag() {
         //Get marking tag value
         marking = Instantiate(markingPrefab);
         marking.transform.SetParent(parentPrefab.transform, false);
         marking.name = markingTag;
 
+        //Set marking colour
         materialName = markingColour;
         MaterialSelection();
         marking.gameObject.GetComponent<Renderer>().material = selectedMaterial;
 
-        GameObject lr = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag);   //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag
+        //Place LineRenderer in marking gameobject
+        GameObject lr = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag);
         marking = Instantiate(lineRendererPrefab);
         marking.transform.SetParent(lr.transform, false);
 
+        //Add tag gameobject to marking
         tagObject = Instantiate(tagPrefab);
         tagObject.transform.SetParent(lr.transform, false);
 
+        //Add damage type info to the tag's information window
         typeName = markingType;
-        GameObject typeObject = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag+"/HoloTag(Clone)/DescriptionWindow/TypeAnswer");    //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings/"+markingTag+"/HoloTag(Clone)/DescriptionWindow/TypeAnswer"
+        GameObject typeObject = GameObject.Find("ImageTarget/"+modelName+"(Clone)/Markings/"+markingTag+"/HoloTag(Clone)/DescriptionWindow/TypeAnswer");
         typeObject.GetComponent<TextMeshPro>().text = typeName;
     }
 
+    //Function to get the colour material from the Resources/Colours/ folder
     public void MaterialSelection() {
         var material = Resources.Load("Colours/"+materialName);
         selectedMaterial = material as Material; 
     }
 
     //////////////////////////////////////////////////////////////////////
+    //Functions to receive variables from other scripts
 
+    //Receive modelName variable
     public void GetModelName(string modelName) {
         this.modelName = modelName;
     }
     
+    //Receive markingTag variable
     public void GetMarkingTag(string markingTag) {
         this.markingTag = markingTag;
     }
 
+    //Receive markingColour variable
     public void GetMarkingColour(string markingColour) {
         this.markingColour = markingColour;
     }
 
+    //Receive markingType variable
     public void GetMarkingType(string markingType) {
         this.markingType = markingType;
     }

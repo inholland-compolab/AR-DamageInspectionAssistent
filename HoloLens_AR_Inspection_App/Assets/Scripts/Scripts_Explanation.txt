@@ -1,0 +1,21 @@
+* Scenes were used in the HoloLens 1 version of the app. For the HoloLens 2, the scenes are replaced to prefabs. So, the SceneManager folder is not used. *
+
+Each mode has its own folder for scripts. This folder contains all scripts that are needed to fulfil its functions.
+
+
+Outside these folders also some other scripts are available:
+
+Holo2Pointers.cs
+This script is used as an example to see how raycasts are made from the pointers of your hand. This is eventually used for placing the coordinates.
+
+ModelPositioning.cs
+This script provides the functions for the PositioningWindow within the Inspection and View Mode. These functions can alter the position and rotation of the 3D model. This is created to manually let the user reposition the 3D model.
+
+ObjectScenesManager.cs
+This script handles the "Scene" prefabs for the start menu.
+
+SimpleJSON.cs
+This script is copied from internet to create the SimpleJSON namespace for the storage system of the app.
+
+TrackingManager.cs
+This script handles the Tracking ability of Vuforia. The user can turn the tracking mode ON or OFF. In OFF state, the 3D model (child of ImageTarget) is still visible, due to changes in the vuforia ObjectTracker script. And Vuforia will stop searching for the ImageTarget (QR code). When its ON, Vuforia will start looking for the ImageTarget again.

@@ -14,6 +14,7 @@ public class ColourValue : MonoBehaviour
 
     public void Awake() 
     {
+        //Set variables for interactable buttons at start of script
         buttonStateGreen = greenButton.GetComponent<Microsoft.MixedReality.Toolkit.UI.Interactable>();
         buttonStatePink = pinkButton.GetComponent<Microsoft.MixedReality.Toolkit.UI.Interactable>();
         buttonStateOrange = orangeButton.GetComponent<Microsoft.MixedReality.Toolkit.UI.Interactable>();
@@ -21,22 +22,26 @@ public class ColourValue : MonoBehaviour
 
     public void Update() 
     {
+        //Send current colour to HierarchyManager script
         HierarchyManager hierarchyManager = GameObject.Find("InspectionManager").GetComponent<HierarchyManager>();
         hierarchyManager.GetMarkingColour(markingColour);
     }
 
+    //When green is selected, deactivate other colour buttons
     public void Green() {
         markingColour = "Green";
         buttonStatePink.IsToggled = false;
         buttonStateOrange.IsToggled = false;
     }
 
+    //When pink is selected, deactivate other colour buttons
     public void Pink() {
         markingColour = "Pink";
         buttonStateGreen.IsToggled = false;
         buttonStateOrange.IsToggled = false;
     }
 
+    //When orange is selected, deactivate other colour buttons
     public void Orange() {
         markingColour = "Orange";
         buttonStatePink.IsToggled = false;

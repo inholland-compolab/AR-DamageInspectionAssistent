@@ -11,8 +11,7 @@ public class InfoWindow : MonoBehaviour
     GameObject textMode1;
 
     
-
-
+    //Function to display register mode explanation
     public void RegisterExplanation() {
         TextMeshProUGUI component = textMode.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI component1 = textMode1.GetComponent<TextMeshProUGUI>();
@@ -20,6 +19,7 @@ public class InfoWindow : MonoBehaviour
         component1.text = "Within this mode, it is possible to make a new project and connect the corresponding nose cone model. This provides the Image Tracking function to place the right nose cone model at the target.";
     }
 
+    //Function to display inspection mode explanation
     public void InspectionExplanation() {
         TextMeshProUGUI component = textMode.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI component1 = textMode1.GetComponent<TextMeshProUGUI>();
@@ -27,6 +27,7 @@ public class InfoWindow : MonoBehaviour
         component1.text = "Within this mode, inspection markings are drawn upon the nose cone. Also additional damage information is linked to the markings.";
     }
 
+    //Function to display view mode explanation
     public void ViewExplanation() {
         TextMeshProUGUI component = textMode.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI component1 = textMode1.GetComponent<TextMeshProUGUI>();

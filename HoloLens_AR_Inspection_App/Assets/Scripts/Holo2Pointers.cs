@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Holo2Pointers : MonoBehaviour
 {
+    //This script is used as example for the placement of coordinates!!!
+    //For the HoloLens 2: the pointers from your hand are used to create rays and detect a hit.
+
+
     // Update is called once per frame
     void Update()
     {

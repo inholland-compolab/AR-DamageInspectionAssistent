@@ -10,28 +10,25 @@ public class ObjectScenesManager : MonoBehaviour
     [SerializeField] GameObject inspection;
     [SerializeField] GameObject view;
 
+    //Open start menu at start of script
     public void Awake() 
     {
         start.SetActive(true);
     }
 
-    // public void OpenStartScreen() {
-    //     GameObject imageTarget = GameObject.Find("ImageTarget");
-    //     foreach (Transform i in imageTarget.transform) {
-    //         Destroy(i.gameObject);
-    //     }
-    // }
-
+    //Hide start menu and spawn register mode menu
     public void OpenRegisterMode() {
         start.SetActive(false);
         Instantiate(register);
     }
 
+    //Hide start menu and spawn inspection mode menu
     public void OpenInspectionMode() {
         start.SetActive(false);
         Instantiate(inspection);
     }
 
+    //Hide start menu and spawn view mode menu
     public void OpenViewMode() {
         start.SetActive(false);
         Instantiate(view);
