@@ -1,4 +1,4 @@
-This folder contains the scripts for the View Mode.
+This folder contains the scripts for the View Mode. (Also some scripts from the Inspection Mode are used)
 
 ViewButtons.cs
 This script shows all functions that are used by buttons located in the View Mode menu.

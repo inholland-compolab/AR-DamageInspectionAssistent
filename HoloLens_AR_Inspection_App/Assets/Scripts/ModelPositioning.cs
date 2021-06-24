@@ -36,21 +36,22 @@ public class ModelPositioning : MonoBehaviour
     public List<Vector3> positionList = new List<Vector3>();
     public List<Quaternion> rotationList = new List<Quaternion>();
 
+    //Get initial values at start of script
     public void Awake() 
     {
-        imageTarget = GameObject.Find("ImageTarget");
+        imageTarget = GameObject.Find("ImageTarget");       //Find ImageTarget gameobject
 
-        positionList.Clear();
-        rotationList.Clear();
+        positionList.Clear();                               //Clear list
+        rotationList.Clear();                               //Clear list
 
+        //Get initial position of ImageTarget gameobject
         foreach(Transform i in imageTarget.transform) {
             positionList.Add(i.position);
             rotationList.Add(i.rotation);
         }
-
-        Debug.Log(positionList.ToString());
     }
 
+    //Check each frame if the position/rotation has to be changed
     public void Update() 
     {
         foreach(Transform i in imageTarget.transform) {
@@ -71,7 +72,7 @@ public class ModelPositioning : MonoBehaviour
             //Rotate
             if (sliderUpRotBool == true) {
                 upRotValue = sliderRotUp.GetComponent<PinchSlider>().SliderValue;
-                i.Rotate(0, speed * 4f * (upRotValue-0.5f), 0, Space.World);       //transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
+                i.Rotate(0, speed * 4f * (upRotValue-0.5f), 0, Space.World);
             }
             if (sliderRightRotBool == true) {
                 rightRotValue = sliderRotRight.GetComponent<PinchSlider>().SliderValue;
@@ -84,6 +85,7 @@ public class ModelPositioning : MonoBehaviour
         }
     }
 
+    //Functions to tell the script that a slider is used to adjust the ImageTarget's children position/rotation
     public void SliderUp() {
         sliderUpBool = true;
     }
@@ -108,6 +110,8 @@ public class ModelPositioning : MonoBehaviour
         sliderForwardRotBool = true;
     }
 
+    //Function to set the sliders to their start value when released
+    //and stop adjusting the position/rotation
     public void Cancel() {
         sliderUpBool = false;
         sliderRightBool = false;
@@ -124,6 +128,7 @@ public class ModelPositioning : MonoBehaviour
         sliderRotForward.GetComponent<PinchSlider>().SliderValue = 0.5f;
     }
 
+    //Function to place the ImageTarget's children back to their initial position/rotation
     public void Reset() {
         int x = -1;
         foreach(Transform i in imageTarget.transform) {

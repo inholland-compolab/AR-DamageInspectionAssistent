@@ -1,0 +1,13 @@
+This folder contains all scripts for the Register Mode.
+
+DeleteProject.cs
+This script contains functions to delete a project.
+
+ModelScript.cs
+This script will search for the available 3D models and has a function to display them in the Register Mode menu.
+
+RegisterButtons.cs
+This script provides functions that handle the button interactions to perform functions and open/close menus.
+
+SaveProject.cs
+This script has functions to save the project to the HoloLens.

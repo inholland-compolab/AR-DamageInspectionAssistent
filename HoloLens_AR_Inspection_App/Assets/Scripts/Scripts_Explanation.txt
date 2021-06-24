@@ -1,6 +1,11 @@
 * Scenes were used in the HoloLens 1 version of the app. For the HoloLens 2, the scenes are replaced to prefabs. So, the SceneManager folder is not used. *
 
-Each mode has its own folder for scripts. This folder contains all scripts that are needed to fulfil its functions.
+Each mode has its own folder for scripts. This folder contains all scripts that are needed to fulfil its functions. The following folders are available:
+-InspectionMode
+-RegisterMode
+-SceneManager (not used for HoloLens 2)
+-StartMenu
+-ViewMode
 
 
 Outside these folders also some other scripts are available:

@@ -63,8 +63,8 @@ public class ViewLoad : MonoBehaviour
     //At the start of the script, immediately search for the saved projects and populate the dropdown menu with them.
     public void Awake()
     {
-        DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);
-        FileInfo[] fileArray = dir.GetFiles( "*.json*" );
+        DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);  //Set local app location (app folder path)
+        FileInfo[] fileArray = dir.GetFiles( "*.json*" );                   //Get an array of all json files from folder
 
         for (int i = 0; i < fileArray.Length; i++) {                        //Get all names of the available projects
             string[] nameOnly = fileArray[i].ToString().Split('_');         //Only get name part
@@ -93,7 +93,7 @@ public class ViewLoad : MonoBehaviour
     }
 
 
-    //No path found timer back to set value
+    //Function to set no path found timer back to start value
     public void SetTimer() {
         timer = 3.0f;
     }
@@ -106,17 +106,19 @@ public class ViewLoad : MonoBehaviour
         projectName = projectFileName.Substring(0, projectFileName.Length - 5);                     //Remove .json from value to get project name
         path = Application.persistentDataPath + "/NoseConeProject_"+projectName+".json";            //Define project json file path
         try {
-            File.ReadAllText(path);                                                                 //Try path
+            File.ReadAllText(path);                                             //Try path
         }
-        catch (FileNotFoundException) {
-            SetTimer();                                                                             //Set timer to 3 seconds
-            noPathPopUp.SetActive(true);                                                            //Show pop up to inform user about wrong file path
+        catch (FileNotFoundException) {                                         //Look for no path found error
+            SetTimer();                                                         //Set timer to 3 seconds
+            noPathPopUp.SetActive(true);                                        //Show pop up to inform user about wrong file path
         }
-        string jsonString = File.ReadAllText(path);                                                 //Read whole json file and convert to string
-        JSONObject loadJson = (JSONObject)JSON.Parse(jsonString);                                   //Retrieve json object
 
-        nameLoad = loadJson["Project"];                                                             //Get name from name object
-        modelLoad = loadJson["Model"];                                                              //Get model name from model object
+        //Read project
+        string jsonString = File.ReadAllText(path);                             //Read whole json file and convert to string
+        JSONObject loadJson = (JSONObject)JSON.Parse(jsonString);               //Retrieve json object
+
+        nameLoad = loadJson["Project"];                                         //Get name from name object
+        modelLoad = loadJson["Model"];                                          //Get model name from model object
 
         //Spawn Model
         var prefab = Resources.Load("3DModels/"+modelLoad);                 //Load nose cone prefab corresponding to the model name
@@ -124,29 +126,29 @@ public class ViewLoad : MonoBehaviour
         modelParent = GameObject.Find("ImageTarget");
         Instantiate(selectedPrefab, modelParent.transform);                 //Spawn prefab (wanted nose cone) as child of Target Image
 
-        spawnedModel = GameObject.Find(modelLoad+"(Clone)");
+        //Find saved markings
+        for (int i = 0; i < loops; i++) {                                                   //Search for Marking_0 until Marking_100 within saved json file
+            preLoad = loadJson["Marking_"+i].ToString();                                    //Get Marking_i part of saved json file (this contains the coordinates)
+            arrayLoad = preLoad.Split(';');                                                 //Split the coordinates' string
+            parentPrefab = GameObject.Find("ImageTarget/"+modelLoad+"(Clone)/Markings");    //Find Markings (group) gameobject of 3D model
 
-        for (int i = 0; i < loops; i++) {
-            preLoad = loadJson["Marking_"+i].ToString();
-            arrayLoad = preLoad.Split(';');
-            parentPrefab = GameObject.Find("ImageTarget/"+modelLoad+"(Clone)/Markings");    //"ImageTarget/RevEng_NoseCone_Fokker100(Clone)/Markings"
+            materialLoad = loadJson["Colour_"+i].ToString();                                //Get Colour_i part of saved json file
+            materialLoad = materialLoad.Substring(1, materialLoad.Length - 2);              //Get only the relevant colour name
+            MaterialSelection();                                                            //Perform material selection function
 
-            materialLoad = loadJson["Colour_"+i].ToString();
-            materialLoad = materialLoad.Substring(1, materialLoad.Length - 2);
-            MaterialSelection();
-
-            typeLoad = loadJson["Type_"+i].ToString();
+            typeLoad = loadJson["Type_"+i].ToString();                                  //Get Type_i part of saved json file
             
-            marking = Instantiate(markingPrefab);
-            marking.transform.SetParent(parentPrefab.transform, false);
-            marking.name = (i.ToString());
-            marking.GetComponent<Renderer>().material = selectedMaterial;
+            marking = Instantiate(markingPrefab);                                   //Spawn marking gameobject
+            marking.transform.SetParent(parentPrefab.transform, false);             //Make this marking child of Markings gameobject
+            marking.name = (i.ToString());                                          //Set name to i (marking number)
+            marking.GetComponent<Renderer>().material = selectedMaterial;           //Give marking the corresponding material
             
+            //Populate marking with coordinates
             for (int x = 0; x < arrayLoad.Length; x++){
-                    if ( ((x % 3) == 0) && (x <= arrayLoad.Length-2) ) {
-                        spawnLoad.x = float.Parse(arrayLoad[x].Trim('['));
-                        spawnLoad.y = float.Parse(arrayLoad[(x+1)]);
-                        spawnLoad.z = float.Parse(arrayLoad[(x+2)].Trim(']'));
+                    if ( ((x % 3) == 0) && (x <= arrayLoad.Length-2) ) {            //Divide coordinates array in groups of 3 coordinates
+                        spawnLoad.x = float.Parse(arrayLoad[x].Trim('['));          //Get x coordinate and delete [ symbol
+                        spawnLoad.y = float.Parse(arrayLoad[(x+1)]);                //Get y coordinate
+                        spawnLoad.z = float.Parse(arrayLoad[(x+2)].Trim(']'));      //Get z coordinate and delete ] symbol
                         
                         //Spawn coordinate, set parent with relative offset, set local position
                         spawnedCoordinate = Instantiate(coordinatePrefab);
@@ -156,12 +158,14 @@ public class ViewLoad : MonoBehaviour
             }
         }
 
+        //Delete all markings without coordinates
         foreach (Transform i in parentPrefab.transform) {
-            if (i.childCount < 3) {
+            if (i.childCount < 1) {
                 Destroy(i.gameObject);
             }
         }
 
+        //Spawn LineRenderer and MarkingTag for each marking
         foreach (Transform i in parentPrefab.transform) {
             marking = Instantiate(lineRendererPrefab);
             marking.transform.SetParent(i.transform, false);
@@ -170,14 +174,17 @@ public class ViewLoad : MonoBehaviour
             tagObject.transform.SetParent(i.transform, false);
         }
 
+        //Give every marking the corresponding damage type information
         for (int i = 0; i < loops; i++) {
-            typeLoad = loadJson["Type_"+i].ToString();
-            typeName = typeLoad.Substring(1, typeLoad.Length - 2);
+            typeLoad = loadJson["Type_"+i].ToString();                          //Get Type_i part of saved json file
+            typeName = typeLoad.Substring(1, typeLoad.Length - 2);              //Only get the relevant string part
+            //Find Tag text component
             GameObject typeObject = GameObject.Find("ImageTarget/"+modelLoad+"(Clone)/Markings/"+i+"/HoloTag(Clone)/DescriptionWindow/TypeAnswer");
-            typeObject.GetComponent<TextMeshPro>().text = typeName;
+            typeObject.GetComponent<TextMeshPro>().text = typeName;             //Set tag text to damage type
         }
     }
 
+    //Function to load the material from the Resources/Colours/ folder
     public void MaterialSelection() {
         var material = Resources.Load("Colours/"+materialLoad);
         selectedMaterial = material as Material; 
